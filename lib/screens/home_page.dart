@@ -10,7 +10,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  History history = new History(Colors.amber);
+  History history = new History(firstColor: Colors.amber);
+  // I'm just love this color, we can insert there any color we love
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +26,14 @@ class _HomePageState extends State<HomePage> {
                     history.goBack();
                     setState(() {});
                   }
-                : null,
+                : null, // we need this to make button disabled when we can't go back/forward
           ),
           IconButton(
             icon: Icon(Icons.arrow_forward),
             onPressed: history.canGoForward()
                 ? () {
                     history.goForward();
-                    setState(() {});
+                    setState(() {}); //updating screen
                   }
                 : null,
           ),
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         ),
         onTap: () {
           history.addColor(generateRandomColor());
-          setState(() {});
+          setState(() {}); //updating screen
         },
       ),
     );

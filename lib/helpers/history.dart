@@ -4,11 +4,16 @@ class History {
   List<Color> _history = new List<Color>();
   int _currentNumber = 0;
 
-  History(Color firstColor) {
+  History({@required Color firstColor}) {
     _history.add(firstColor);
   }
 
   void addColor(Color color) {
+    if (_history.length > 1000) {
+      _history.removeAt(0);
+      // we need this to save RAM,
+      // if user decides that he opened clicker or something
+    }
     _history.add(color);
     _currentNumber = _history.length - 1;
   }
@@ -18,6 +23,7 @@ class History {
       return _history[_currentNumber];
     else
       return Colors.black;
+    // just dummy color to prevent possible (almost impossible) error
   }
 
   void goBack() {
