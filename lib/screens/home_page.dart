@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hithereapp/helpers/history.dart';
 import 'package:hithereapp/utils/color_generator.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,26 +10,46 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Color backgroundColor = Colors.white;
+  History history = new History(Colors.amber);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Hi there App!'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: history.canGoBack()
+                ? () {
+                    history.goBack();
+                    setState(() {});
+                  }
+                : null,
+          ),
+          IconButton(
+            icon: Icon(Icons.arrow_forward),
+            onPressed: history.canGoForward()
+                ? () {
+                    history.goForward();
+                    setState(() {});
+                  }
+                : null,
+          ),
+        ],
       ),
       body: GestureDetector(
         child: Container(
-          color: backgroundColor,
+          color: history.getCurrentColor(),
           alignment: Alignment.center,
           child: Text(
             'Hey there',
+            style: TextStyle(fontSize: 30),
           ),
         ),
         onTap: () {
-          setState(() {
-            backgroundColor = generateRandomColor();
-          });
+          history.addColor(generateRandomColor());
+          setState(() {});
         },
       ),
     );
